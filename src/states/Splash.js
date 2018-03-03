@@ -21,6 +21,12 @@ export default class extends Phaser.State {
     this.load.image('n5empty', 'assets/images/n5Vide.png')
 
     this.load.image('play', 'assets/images/play.png')
+
+    this.game.load.audio('gameMusic', ['assets/songs/Infernoplex/Infernoplex.mp3'])
+    this.game.load.audio('failAfterStreak', ['assets/sounds/failAfterStreak.mp3'])
+    this.game.load.audio('failed', ['assets/sounds/failed.mp3'])
+    this.game.load.audio('failTooMuch', ['assets/sounds/failTooMuch.mp3'])
+    this.game.load.audio('streak', ['assets/sounds/streak.mp3'])
   }
 
   create () {
