@@ -20,6 +20,18 @@ export default class extends Phaser.State {
     this.load.image('n4empty', 'assets/images/n4Vide.png')
     this.load.image('n5empty', 'assets/images/n5Vide.png')
 
+    this.load.image('explode1', 'assets/images/explode1.png')
+    this.load.image('explode2', 'assets/images/explode2.png')
+    this.load.image('explode3', 'assets/images/explode3.png')
+    this.load.image('explode4', 'assets/images/explode4.png')
+    this.load.image('explode5', 'assets/images/explode5.png')
+
+    this.load.image('note1hit', 'assets/images/note1hit.png')
+    this.load.image('note2hit', 'assets/images/note2hit.png')
+    this.load.image('note3hit', 'assets/images/note3hit.png')
+    this.load.image('note4hit', 'assets/images/note4hit.png')
+    this.load.image('note5hit', 'assets/images/note5hit.png')
+
     this.load.image('play', 'assets/images/play.png')
 
     this.game.load.audio('gameMusic', ['assets/songs/Infernoplex/Infernoplex.mp3'])

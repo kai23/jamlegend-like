@@ -114,6 +114,7 @@ export default class extends Phaser.State {
     if (what.hasHit) {
       if (this.streak % 25 === 0 && !streakAudio.isPlaying) streakAudio.play()
     } else {
+      what.loadTexture(`n${what.jam}empty`)
       if (this.fail) failedAudio.play()
       if (this.streak > 10) failAfterStreakAudio.play()
       if (this.fail > 10 && !failTooMuchAudio.isPlaying) failTooMuchAudio.play()
@@ -158,6 +159,15 @@ export default class extends Phaser.State {
     // notes = [notes[0], notes[1], notes[2], notes[3], notes[4], notes[5], notes[6]]
   }
 
+  createParticles = () => {
+    for (let i = 1; i < 6; i++) {
+      this[`emitterEx${i}`] = this.game.add.emitter(this[`n${i}Position`] + 17, 540)
+      this[`emitterEx${i}`].makeParticles(`explode${i}`)
+      // this[`emitterEx${i}`].setXSpeed(37, 50)
+      this[`emitterEx${i}`].setYSpeed(100, 500)
+    }
+  }
+
   create () {
     score = this.game.add.text(400, 0, this.score)
     streakText = this.game.add.text(400, 100, this.streak)
@@ -174,6 +184,7 @@ export default class extends Phaser.State {
       for (let index = 0; index < notes.length; index++) {
         const { jam, time } = notes[index]
         const s = this.notesGroupe.create(this[`n${jam}Position`], this.timeToPixel(time), `n${jam}`)
+        s.jam = jam
         s.checkWorldBounds = true
         s.events.onEnterBounds.add(() => {
           s.events.onOutOfBounds.add(() => {
@@ -184,7 +195,7 @@ export default class extends Phaser.State {
         })
         this.game.physics.enable(s, Phaser.Physics.ARCADE)
       }
-
+      this.createParticles()
       this.addSong()
       this.addEmptyToGame()
       this.addPlayButton()
@@ -205,6 +216,9 @@ export default class extends Phaser.State {
 
   gotHit = (s, empty) => {
     if (!empty.hasHit) {
+      empty.loadTexture(`note${s.jam}hit`)
+      empty.jam = s.jam
+      this[`emitterEx${s.jam}`].start(true, 1000, null, 30)
       s.kill()
       this.score += 50
       this.fail = 0
